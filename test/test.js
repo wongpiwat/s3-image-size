@@ -2,6 +2,16 @@
 
 var assert = require('assert');
 var size = require('require-main')();
+var AWS = require('aws-sdk');
+
+// Fill in values for test files in your own buckets for testing
+var region = 'FILL_ME_IN';
+var validBucket = 'FILL_ME_IN';
+var validKey = 'FILL_ME_IN';
+var nonImageBucket = 'FILL_ME_IN';
+var nonImageKey = 'FILL_ME_IN';
+
+var s3 = new AWS.S3({region: region});
 
 function isSizeDetected(dimensions, length) {
   assert.strictEqual(typeof dimensions, 'object');
@@ -14,8 +24,9 @@ function isSizeDetected(dimensions, length) {
 }
 
 describe('http-image-size', function() {
-  it('should detect the size of an image via http.', function(done) {
-    size('http://nodejs.org/images/logo.png', function(err, dimensions, length) {
+  it('should detect the size of an image on s3', function(done) {
+    this.timeout(2500);
+    size(s3, validBucket, validKey, function(err, dimensions, length) {
       if (err) {
         done(err);
         return;
@@ -24,28 +35,33 @@ describe('http-image-size', function() {
       done();
     });
   });
-  it('should detect the size of an image via https.', function(done) {
-    size('https://www.npmjs.org/static/img/npm.png', function(err, dimensions, length) {
-      if (err) {
-        done(err);
-        return;
-      }
-      isSizeDetected(dimensions, length);
+  it('should pass an error when the bucket is missing', function(done) {
+    size(s3, null, validKey, function(err) {
+      assert.ok(err instanceof Error);
+      assert.equal(err.name, 'MissingRequiredParameter');
       done();
     });
   });
-  it('should throw an error when the URL doesn\'t have http(s) scheme.', function() {
-    assert.throws(size.bind(null, 'ftp://dummy.com/foo.jpg', function() {}), Error);
-  });
-  it('should pass an error when the image is not found.', function(done) {
-    size('http://jo.github.io/http-image-size/dummy.gif', function(err) {
-      assert.throws(assert.ifError.bind(null, err));
+  it('should pass an error when the key is missing', function(done) {
+    size(s3, validBucket, null, function(err) {
+      assert.ok(err instanceof Error);
+      assert.equal(err.name, 'MissingRequiredParameter');
       done();
     });
   });
-  it('should pass an type error when the URL is not an image URL.', function(done) {
-    size('http://example.com/', function(err) {
-      assert.throws(assert.ifError.bind(null, err), TypeError);
+  it('should pass an error when the image is not found', function(done) {
+    this.timeout(1000);
+    size(s3, validBucket, 'noImageHere', function(err) {
+      assert.ok(err instanceof Error);
+      assert.equal(err.name, 'NoSuchKey');
+      done();
+    });
+  });
+  it('should pass an error when the object is not an image', function(done) {
+    this.timeout(1000);
+    size(s3, nonImageBucket, nonImageKey, function(err) {
+      assert.ok(err instanceof Error);
+      assert.equal(err.name, 'TypeError');
       done();
     });
   });

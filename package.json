@@ -1,34 +1,35 @@
 {
-  "name": "http-image-size",
-  "version": "1.1.0",
-  "description": "Detect image dimensions via http.",
+  "name": "s3-image-size",
+  "version": "0.1.2",
+  "description": "Detect image dimensions via Amazon S3",
   "main": "index.js",
   "scripts": {
     "test": "mocha test --reporter spec"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jo/http-image-size.git"
+    "url": "https://github.com/chazmo03/s3-image-size.git"
   },
   "keywords": [
     "image",
     "size",
     "dimensions",
-    "http",
-    "https",
+    "aws",
+    "s3",
     "network"
   ],
-  "author": "Johannes J. Schmidt",
+  "author": "Charles D. Augello",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jo/http-image-size/issues"
+    "url": "https://github.com/chazmo03/s3-image-size/issues"
   },
-  "homepage": "https://github.com/jo/http-image-size",
+  "homepage": "https://github.com/chazmo03/s3-image-size",
   "dependencies": {
-    "image-size": "^0.3.0"
+    "image-size": "^0.3.5"
   },
   "devDependencies": {
-    "mocha": "^1",
-    "require-main": "^0.1.0"
+    "aws-sdk": "^2.2.12",
+    "mocha": "^2.3.3",
+    "require-main": "^0.1.1"
   }
 }
