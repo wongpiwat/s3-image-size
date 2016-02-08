@@ -15,7 +15,7 @@ Based on [http-image-size](https://www.npmjs.com/package/http-image-size).
 var size = require('s3-image-size');
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3({region: 'some region'})
-size('some bucket', 'some key', function(err, dimensions, bytesRead) {
+size(s3, 'some bucket', 'some key', function(err, dimensions, bytesRead) {
   console.log(err, dimensions, bytesRead);
 });
 ```
