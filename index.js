@@ -51,6 +51,4 @@ module.exports = function(s3, bucket, key, callback) {
     }
     return callback(null, dimensions, buffer.length);
   });
-
-  req.send();
 };
