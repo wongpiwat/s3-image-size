@@ -1,5 +1,9 @@
 # s3-image-size
 
+I have updated the s3-image-size to upgrade the libraries and converted the code to Promise.
+
+-----
+
 [![NPM version](https://badge.fury.io/js/s3-image-size.svg)](http://badge.fury.io/js/s3-image-size)
 [![Dependency Status](https://david-dm.org/chazmo03/s3-image-size.svg)](https://david-dm.org/chazmo03/s3-image-size)
 [![devDependency Status](https://david-dm.org/chazmo03/s3-image-size/dev-status.svg)](https://david-dm.org/chazmo03/s3-image-size#info=devDependencies)
@@ -12,12 +16,11 @@ Based on [http-image-size](https://www.npmjs.com/package/http-image-size).
 
 ## Usage
 ```js
-var size = require('s3-image-size');
-var AWS = require('aws-sdk');
-var s3 = new AWS.S3({region: 'some region'})
-size(s3, 'some bucket', 'some key', function(err, dimensions, bytesRead) {
-  console.log(err, dimensions, bytesRead);
-});
+const size = require('s3-image-size');
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({region: 'some region'})
+const result = size(s3, 'some bucket', 'some key');
+console.log(result);
 ```
 
 The callback receives three arguments: `err`, `dimensions`, `bytesRead`:
