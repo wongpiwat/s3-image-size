@@ -25,11 +25,14 @@
   },
   "homepage": "https://github.com/chazmo03/s3-image-size",
   "dependencies": {
-    "image-size": "^0.5.0"
+    "image-size": "^0.5.5"
   },
   "devDependencies": {
-    "aws-sdk": "^2.2.12",
-    "mocha": "^2.3.3",
-    "require-main": "^0.1.1"
+    "aws-sdk": "^2.587.0",
+    "mocha": "^2.5.3",
+    "require-main": "^0.1.1",
+    "husky": "^4.2.1",
+    "prettier": "1.19.1",
+    "pretty-quick": "^2.0.1"
   }
 }
